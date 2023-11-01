@@ -27,7 +27,7 @@ public class Main {
         saveGame(listSave.get(2), thirdEx);
 
         zipFiles(SAVE_PATH + "saves.zip", listSave);
-
+        deleteFiles(listSave);
     }
 
     public static void saveGame(String fullPathToTheFile, GameProgress progress) {
@@ -51,7 +51,7 @@ public class Main {
                     if (fis.read(buffer) == 0) {
                         System.out.println("File " + savingFile + " is empty!!!");
                     } else {
-                        new File(savingFile).deleteOnExit();
+                        System.out.println("Read success");//new File(savingFile).deleteOnExit();
                     }
                     zos.write(buffer);
                     zos.closeEntry();
@@ -61,6 +61,21 @@ public class Main {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+        }
+    }
+
+    public static void deleteFiles(List<String> listPathDeletingObjects) {
+        for (String deletingFile : listPathDeletingObjects) {
+            try {
+                File file = new File(deletingFile);
+                if (file.delete()) {
+                    System.out.println("File " + deletingFile + " deleted successfully");
+                } else {
+                    System.out.println("Failed to delete file " + deletingFile);
+                }
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         }
     }
 }
